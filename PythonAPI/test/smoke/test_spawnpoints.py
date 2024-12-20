@@ -48,11 +48,15 @@ class TestSpawnpoints(SyncSmokeTest):
                     response = self.client.apply_batch_sync(batch, False)
 
                     self.assertFalse(any(x.error for x in response))
+# 获取所有成功生成的车辆的Actor ID
                     ids = [x.actor_id for x in response]
+# 断言生成的车辆数量与生成点的数量相等，确保每个生成点都成功生成了车辆
                     self.assertEqual(len(ids), len(spawn_points))
+# 推进世界模拟一帧，获取这一帧对应的时间戳等信息
 
                     frame = self.world.tick()
                     snapshot = self.world.get_snapshot()
+# 断言世界模拟的帧编号与快照的时间戳对应的帧编号一致
                     self.assertEqual(frame, snapshot.timestamp.frame)
 
                     actors = self.world.get_actors()
