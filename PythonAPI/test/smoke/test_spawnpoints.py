@@ -18,12 +18,15 @@ class TestSpawnpoints(SyncSmokeTest):
         blueprints = self.filter_vehicles_for_old_towns(blueprints)
 
         # get all available maps
+//获取客户端可用的所有地图列表，后续会遍历这些地图来进行相关测试操作。
         maps = self.client.get_available_maps()
         for m in maps:
+//排除特定的地图（BaseMap、Town11、Town12），对其他地图进行以下测试操作
 
             if m != '/Game/Carla/Maps/BaseMap/BaseMap' and m != '/Game/Carla/Maps/Town11/Town11' and m != '/Game/Carla/Maps/Town12/Town12':
 
                 # load the map
+//加载指定的地图，这一步会切换当前的游戏世界地图。
                 self.client.load_world(m)
                 # workaround: give time to UE4 to clean memory after loading (old assets)
                 time.sleep(5)
